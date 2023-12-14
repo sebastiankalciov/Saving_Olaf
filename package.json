@@ -1,0 +1,29 @@
+{
+  "name": "saving_olaf",
+  "version": "1.0.0",
+  "description": "Saving Olaf is a project made for piratzii winter's edition hackaton, WinterCode Wonderland.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastiankalciov/Saving_Olaf.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "winter"
+  ],
+  "author": "Sebastian Kalciov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebastiankalciov/Saving_Olaf/issues"
+  },
+  "homepage": "https://github.com/sebastiankalciov/Saving_Olaf#readme",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "nodemon": "^3.0.2",
+    "pg": "^8.11.3"
+  }
+}
