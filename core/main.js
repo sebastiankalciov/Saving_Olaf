@@ -6,7 +6,6 @@ const {
     Routes,
     Client,
     Collection,
-    Events,
     GatewayIntentBits
 } = require('discord.js');
 
@@ -19,6 +18,7 @@ const credentials = require("../source/config/credentials.json")
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
+console.log(foldersPath)
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {

@@ -4,21 +4,14 @@ const path = require('node:path');
 const {
     REST,
     Routes,
-    Client,
-    Collection,
-    Events,
-    GatewayIntentBits
 } = require('discord.js');
 
-const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
-});
+const credentials = require("../../source/config/credentials.json");
+const commands = [];
 
-const credentials = require("../../source/config/credentials.json")
 
-client.commands = new Collection();
-
-const foldersPath = path.join(__dirname, 'commands');
+const foldersPath = path.join(__dirname, '../commands');
+console.log(foldersPath)
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
@@ -33,8 +26,8 @@ for (const folder of commandFolders) {
 
         // Append a new command into the collection
         if ('data' in command && 'execute' in command) {
-
-            client.commands.set(command.data.name, command);
+            console.log(`command data: ${command.data.toJSON()}`)
+            commands.push(command.data.toJSON());
 
         } else {
             console.log(`[Warning]: Command at ${filePath} is missing a required "data" or "execute" property!`)
@@ -51,7 +44,7 @@ const rest = new REST().setToken(credentials.token);
         console.log('Started refreshing application (/) commands.');
 
         const data = await rest.put(
-            Routes.applicationGuildCommands(credentials.client_id, credentials.guild_id), {
+            Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id), {
                 body: commands
             },
         );
@@ -61,4 +54,4 @@ const rest = new REST().setToken(credentials.token);
     } catch (error) {
         console.error(error);
     }
-})
+})();

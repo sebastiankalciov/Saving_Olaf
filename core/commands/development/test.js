@@ -7,6 +7,8 @@ module.exports = {
 		.setDescription('Command used for testing!'),
 		
 	async execute(interaction) {
-		await interaction.reply('Hellooo, I am Olaf and I like warm hugs');
+		const emote = interaction.client.emojis.cache.get("1184979307437772902")
+		const message = await interaction.reply(`${emote} Hellooo, I am Olaf and I like warm hugs`);
+		
 	},
 };
