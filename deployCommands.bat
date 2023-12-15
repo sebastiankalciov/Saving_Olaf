@@ -2,5 +2,5 @@
 
 @ECHO OFF
 ECHO --- Deployment [Development] ---
-node core/deployment/deployGuildCommands.js
+node core/deployment/deployCommands.js --prod
 PAUSE

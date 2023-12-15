@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 
@@ -7,8 +7,10 @@ module.exports = {
 		.setDescription('Command used for testing!'),
 		
 	async execute(interaction) {
+		const embed = new EmbedBuilder()
+			.set
 		const emote = interaction.client.emojis.cache.get("1184979307437772902")
-		const message = await interaction.reply(`${emote} Hellooo, I am Olaf and I like warm hugs`);
+		const message = await interaction.reply(`> ${emote} Hellooo, I am Olaf and I like warm hugs`);
 		
 	},
 };
