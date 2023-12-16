@@ -1,24 +1,20 @@
-const fs = require('node:fs');
-const path = require('node:path');
+const { Client, GatewayIntentBits } = require('discord.js');
 
-const {
-    REST,
-    Routes,
-    Client,
-    Collection,
-    GatewayIntentBits
-} = require('discord.js');
-
-const client = new Client({
+global.client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
-const credentials = require("../source/config/credentials.json")
 
-
+const {Collection} = require('discord.js');
 client.commands = new Collection();
+client.profiles = new Collection();
+client.snowmans = new Collection();
 
+// Register commands
+
+const path = require('node:path');
 const foldersPath = path.join(__dirname, 'commands');
 
+const fs = require('node:fs');
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
@@ -45,28 +41,6 @@ for (const folder of commandFolders) {
 }
 
 
-// Register slash commands
-
-const rest = new REST().setToken(credentials.token);
-
-(async () => {
-    try {
-
-        console.log('Started refreshing application (/) commands.');
-
-        const data = await rest.put(
-            Routes.applicationGuildCommands(credentials.client_id, credentials.guild_id), {
-                body: commands
-            },
-        );
-
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-
-    } catch (error) {
-        console.error(error);
-    }
-})
-
 // Register events
 
 const eventsPath = path.join(__dirname, "events");
@@ -86,4 +60,5 @@ for (const file of eventsFiles) {
 
 }
 
+const credentials = require("../source/config/credentials.json")
 client.login(credentials.token);

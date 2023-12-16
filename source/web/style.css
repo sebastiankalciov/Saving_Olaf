@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #070707;
+}
+
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100vw; 
+    height: 100vh;
+    z-index: 1;
+}
+
+.snowflake {
+    position: absolute;
+    background: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}

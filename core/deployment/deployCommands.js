@@ -1,25 +1,10 @@
-const fs = require('node:fs');
 const path = require('node:path');
-
-const {
-    REST,
-    Routes,
-    Client,
-    Collection,
-    Events,
-    GatewayIntentBits
-} = require('discord.js');
-
-const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
-});
-
-const credentials = require("../../source/config/credentials.json")
-
-client.commands = new Collection();
-
 const foldersPath = path.join(__dirname, '../commands');
+
+const fs = require('node:fs');
 const commandFolders = fs.readdirSync(foldersPath);
+
+const commands = []
 
 for (const folder of commandFolders) {
 
@@ -33,49 +18,34 @@ for (const folder of commandFolders) {
 
         // Append a new command into the collection
         if ('data' in command && 'execute' in command) {
-
-            client.commands.set(command.data.name, command);
+            console.log(command.data.name)
+            commands.push(command.data.toJSON());
 
         } else {
-            console.log(`[Warning]: Command at ${filePath} is missing a required "data" or "execute" property! [PROD]`)
+            console.log(`[Warning]: Command at ${filePath} is missing a required "data" or "execute" property!`)
         }
     }
 }
 
-// Deploy commands in production
+// Register slash commands
+const credentials = require("../../source/config/credentials.json")
+
+const {REST} = require('discord.js');
 const rest = new REST().setToken(credentials.token);
 
-// Check whether the command is used to deploy in production/development
-const production = process.argv.includes('--prod') || process.argv.includes('-p');
-const development = process.argv.includes('--dev') || process.argv.includes('-d');
-
 (async () => {
-    try {
+	try {
+		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-        console.log('Started refreshing application (/) commands. [PROD]');
+        const { Routes } = require('discord.js');
+		const data = await rest.put(
+			Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id),
+			{ body: commands },
+		);
 
-        if (production) {
-            const data = await rest.put(
-                Routes.applicationCommands(credentials.client_id), {
-                    body: commands
-                },
-            );
-        } else if (development) { 
-            const data = await rest.put(
-                Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id), {
-                    body: commands
-                },
-            );
-        } else {
-            const data = await rest.put(
-                Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id), {
-                    body: commands
-                },
-            );
-        }
-        console.log(`Successfully reloaded ${data.length} application (/) commands. [PROD]`);
+		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 
-    } catch (error) {
-        console.error(error);
-    }
-})
+	} catch (error) {
+		console.error(error);
+	}
+})();
