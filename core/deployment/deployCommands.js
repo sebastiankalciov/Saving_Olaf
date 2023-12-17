@@ -18,7 +18,7 @@ for (const folder of commandFolders) {
 
         // Append a new command into the collection
         if ('data' in command && 'execute' in command) {
-            console.log(command.data.name)
+            
             commands.push(command.data.toJSON());
 
         } else {
@@ -39,7 +39,8 @@ const rest = new REST().setToken(credentials.token);
 
         const { Routes } = require('discord.js');
 		const data = await rest.put(
-			Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id),
+			Routes.applicationCommands(credentials.client_id),
+            // Routes.applicationGuildCommands(credentials.client_id, credentials.main_guild_id),
 			{ body: commands },
 		);
 

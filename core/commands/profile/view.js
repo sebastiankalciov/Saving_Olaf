@@ -93,7 +93,7 @@ module.exports = {
                             id: snowman.broom_id
                         }
                     })
-                    // Database related issue
+                    // Database related issue, to be fixed later
                     
                     // const pot = await Equipment.findOne({
                     //     where: {

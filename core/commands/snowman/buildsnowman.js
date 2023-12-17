@@ -18,8 +18,11 @@ module.exports = {
 			const userProfile = client.profiles.get(id);
             
 			if (!userProfile) return null;
+
             const userSnowman = client.snowmans.get(id);
-            if (userSnowman) return true;
+
+			// If the user already has built a snowman, return a string to address this situation
+            if (userSnowman) return "invalid";
 
             const { Snowmans } = require('../../database/objects.js');
             const snowmanName = interaction.options.get('name').value;
@@ -40,7 +43,7 @@ module.exports = {
 
 			buildSnowman(user.id).then(async hasSnowman => {
                 
-				if (hasSnowman === true) {
+				if (hasSnowman === "invalid") {
 
                     await interaction.reply({
 						content: `${emote} Hellooo, you already built a snowman!`,
