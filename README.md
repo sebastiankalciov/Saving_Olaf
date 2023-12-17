@@ -18,7 +18,7 @@ You can invite him into your server by accessing the github pages. [Click me](ht
 ✅ - Build a snowman by only passing it's name <br>
 ![buildSnowman](./presentationImages/closeBuildSnowman.png) <br>
 ✅ - Display your profile/snowman to see how you stand in the battle field against the evil snow mans <br>
-![viewSnowman](./presentationImages/viewSnowman.png) <br>
+![viewSnowman](./presentationImages/viewSnowmanGIF.gif) <br>
 ✅ - Fool Proof <br>
 ![foolProof](./presentationImages/foolProof.png)
 ## ⌨️ Features to be added:
